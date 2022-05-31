@@ -2,32 +2,31 @@ from tkinter import *
 import screen_capture
 
 
-# --- function update color ---
-
-def update_color(x, colour):
-    a = '#%02x%02x%02x' % colour
-    x['bg'] = a
-
-
+# This function gets the data from screen capture module, reads and changes colors of all labels every given time
 def get_data(root, name_all, label):
+
     i = 0
     data = screen_capture.get_screen_data()
-    for a in data:
-        for b in a:
-            colour = (int(b[2]), int(b[1]), int(b[0]))
+
+    for side in data:
+        for components in side:
+            # color from screen_capture is in BGR standard, so we have to change this standard to RGB
+            colour = (int(components[2]), int(components[1]), int(components[0]))
             if i < len(name_all):
-                a = '#%02x%02x%02x' % colour
-                label[name_all[i]]['bg'] = a
+                side = '#%02x%02x%02x' % colour
+                label[name_all[i]]['bg'] = side
             i += 1
+
+    # This function runs function every given time
+    # Arguments: (time_in_ms, name_of_function, function_argument_1,  function_argument_2, ...)
     root.after(10, get_data, root, name_all, label)
 
 
-# --- gui ---
-
+# This function runs gui
 def gui():
     root = Tk()
 
-    # --- creating labels ----
+    # There we write number o columns and rows
     num_of_col = 20
     num_of_rows = 20
 
@@ -35,9 +34,8 @@ def gui():
     name_r = []
     name_t = []
     name_b = []
-    i = 1
-    j = 0
 
+    i = 1
     while i <= num_of_rows:
         name_l.append('%i,0' % (i))
         name_r.append('%i,%i' % (i, num_of_col + 1))
@@ -53,6 +51,7 @@ def gui():
     label = {}
 
     i = 0
+    # There, we add labels to the dictionary in the proper position
     for name in name_all:
         position = name.split(',')
 
@@ -61,6 +60,7 @@ def gui():
         label[name] = lb
         i += 1
 
+    # There we run get_data function with
     get_data(root, name_all, label)
 
     root.mainloop()
