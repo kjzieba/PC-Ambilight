@@ -1,5 +1,6 @@
 import sys
 import gui
+import send_data
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
@@ -8,4 +9,4 @@ if __name__ == '__main__':
         else:
             pass
     else:
-        pass
+        send_data.start()
