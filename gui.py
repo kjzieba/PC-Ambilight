@@ -3,10 +3,10 @@ import screen_capture
 
 
 # This function gets the data from screen capture module, reads and changes colors of all labels every given time
-def get_data(root, name_all, label):
+def get_data(root, name_all, label, number_of_diodes_in_col, number_of_diodes_in_row):
 
     i = 0
-    data = screen_capture.get_screen_data()
+    data = screen_capture.get_screen_data(number_of_diodes_in_col, number_of_diodes_in_row)
 
     for side in data:
         for components in side:
@@ -19,16 +19,12 @@ def get_data(root, name_all, label):
 
     # This function runs function every given time
     # Arguments: (time_in_ms, name_of_function, function_argument_1,  function_argument_2, ...)
-    root.after(10, get_data, root, name_all, label)
+    root.after(100, get_data, root, name_all, label, number_of_diodes_in_col, number_of_diodes_in_row)
 
 
 # This function runs gui
-def gui():
+def gui(number_of_diodes_in_col, number_of_diodes_in_row):
     root = Tk()
-
-    # There we write number o columns and rows
-    num_of_col = 20
-    num_of_rows = 20
 
     name_l = []
     name_r = []
@@ -36,15 +32,15 @@ def gui():
     name_b = []
 
     i = 1
-    while i <= num_of_rows:
+    while i <= number_of_diodes_in_col:
         name_l.append('%i,0' % (i))
-        name_r.append('%i,%i' % (i, num_of_col + 1))
+        name_r.append('%i,%i' % (i, number_of_diodes_in_row + 1))
         i += 1
 
     i = 1
-    while i <= num_of_col:
+    while i <= number_of_diodes_in_row:
         name_t.append('0,%i' % (i))
-        name_b.append('%i,%i' % (num_of_rows + 1, i))
+        name_b.append('%i,%i' % (number_of_diodes_in_col + 1, i))
         i += 1
 
     name_all = name_l + name_r + name_t + name_b
@@ -61,6 +57,6 @@ def gui():
         i += 1
 
     # There we run get_data function with
-    get_data(root, name_all, label)
+    get_data(root, name_all, label, number_of_diodes_in_col, number_of_diodes_in_row)
 
     root.mainloop()

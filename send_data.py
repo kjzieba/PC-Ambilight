@@ -12,11 +12,11 @@ def wait_until_received(arduino):
     arduino.reset_input_buffer()
 
 
-def start():
+def start(number_of_diodes_in_column, number_of_diodes_in_row):
     arduino = serial.Serial(port='COM3', baudrate=19200, timeout=1)
 
     while True:
-        data = np.array(screen_capture.get_screen_data(), dtype=int)
+        data = np.array(screen_capture.get_screen_data(number_of_diodes_in_column, number_of_diodes_in_row), dtype=int)
 
         for d in data[LEFT]:
             arduino.write(bytes([d[0], d[1], d[2]]))

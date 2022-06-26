@@ -49,17 +49,14 @@ def get_average_color_y(img_np, n):
     return img_np_average_color
 
 
-def get_screen_data():
+def get_screen_data(number_of_diodes_in_column, number_of_diodes_in_row):
     img_np = capture_screen()
     borders = extract_borders(img_np)
 
-    # number of LED diodes
-    n = 20
-
-    img_np_borders_average_color_l = get_average_color_y(borders[0], n)
-    img_np_borders_average_color_r = get_average_color_y(borders[1], n)
-    img_np_borders_average_color_t = get_average_color_x(borders[2], n)
-    img_np_borders_average_color_b = get_average_color_x(borders[3], n)
+    img_np_borders_average_color_l = get_average_color_y(borders[0], number_of_diodes_in_column)
+    img_np_borders_average_color_r = get_average_color_y(borders[1], number_of_diodes_in_column)
+    img_np_borders_average_color_t = get_average_color_x(borders[2], number_of_diodes_in_row)
+    img_np_borders_average_color_b = get_average_color_x(borders[3], number_of_diodes_in_row)
 
     return (img_np_borders_average_color_l, img_np_borders_average_color_r, img_np_borders_average_color_t,
             img_np_borders_average_color_b)
