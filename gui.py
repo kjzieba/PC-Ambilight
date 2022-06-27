@@ -4,14 +4,13 @@ import screen_capture
 
 # This function gets the data from screen capture module, reads and changes colors of all labels every given time
 def get_data(root, name_all, label, number_of_diodes_in_col, number_of_diodes_in_row):
-
     i = 0
     data = screen_capture.get_screen_data(number_of_diodes_in_col, number_of_diodes_in_row)
 
     for side in data:
         for components in side:
             # color from screen_capture is in BGR standard, so we have to change this standard to RGB
-            colour = (int(components[2]), int(components[1]), int(components[0]))
+            colour = (components[2], components[1], components[0])
             if i < len(name_all):
                 side = '#%02x%02x%02x' % colour
                 label[name_all[i]]['bg'] = side
