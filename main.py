@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
             send_data.start(number_of_diodes_in_column, number_of_diodes_in_row)
 
-        except:
+        except ValueError:
             print("Wrong arguments!")
             exit(1)
 

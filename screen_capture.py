@@ -33,30 +33,25 @@ def divide_borders(img_np_borders, n):
 
 # this function gets the average color of a numpy array
 def get_average_color_x(img_np, n):
-    img_np_average_color = []
     size = img_np.shape[1]
-    for i in range(1, n + 1):
-        img_np_average_color.append(np.average(img_np[:, ((size // n) * (i - 1)):((size // n) * i), :], axis=(0, 1)))
-    return img_np_average_color
+    return np.array(
+        [np.average(img_np[:, ((size // n) * (i - 1)):((size // n) * i), :], axis=(0, 1)) for i in range(1, n + 1)])
 
 
 def get_average_color_y(img_np, n):
-    img_np_average_color = []
     size = img_np.shape[0]
-    for i in range(1, n + 1):
-        img_np_average_color.append(
-            np.average(img_np[((size // n) * (i - 1)):((size // n) * i), :, :], axis=(0, 1)))
-    return img_np_average_color
+    return np.array(
+        [np.average(img_np[((size // n) * (i - 1)):((size // n) * i), :, :], axis=(0, 1)) for i in range(1, n + 1)])
 
 
 def get_screen_data(number_of_diodes_in_column, number_of_diodes_in_row):
     img_np = capture_screen()
     borders = extract_borders(img_np)
 
-    img_np_borders_average_color_l = get_average_color_y(borders[0], number_of_diodes_in_column)
-    img_np_borders_average_color_r = get_average_color_y(borders[1], number_of_diodes_in_column)
-    img_np_borders_average_color_t = get_average_color_x(borders[2], number_of_diodes_in_row)
-    img_np_borders_average_color_b = get_average_color_x(borders[3], number_of_diodes_in_row)
+    img_np_borders_average_color_l = get_average_color_y(borders[0], number_of_diodes_in_column).astype(int)
+    img_np_borders_average_color_r = get_average_color_y(borders[1], number_of_diodes_in_column).astype(int)
+    img_np_borders_average_color_t = get_average_color_x(borders[2], number_of_diodes_in_row).astype(int)
+    img_np_borders_average_color_b = get_average_color_x(borders[3], number_of_diodes_in_row).astype(int)
 
     return (img_np_borders_average_color_l, img_np_borders_average_color_r, img_np_borders_average_color_t,
             img_np_borders_average_color_b)
